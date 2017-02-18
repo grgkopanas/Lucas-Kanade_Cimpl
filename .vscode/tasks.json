@@ -4,6 +4,11 @@
     "version": "0.1.0",
     "command": "g++",
     "isShellCommand": true,
-    "args": ["main.cpp", "-g", "-std=c++11", "-o", "app.out", "-I/usr/include/opencv", "-L/usr/local/lib/", "-lopencv_core", "-lopencv_highgui"],
+    "args": ["src/main.cpp", "src/laplacian_pyr.cpp", "src/conv2d.cpp", 
+    "src/derivative.cpp",
+    "-g", "-std=c++11", "-o", "app.out",
+    "-I/usr/include/opencv", "-I${workspaceRoot}",
+    "-L/usr/local/lib/",
+    "-lopencv_core", "-lopencv_highgui", "-lopencv_imgproc"],
     "showOutput": "always"
 }
