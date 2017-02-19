@@ -8,7 +8,7 @@ program_INCLUDE_DIRS := /usr/include/opencv ./
 program_LIBRARY_DIRS := /usr/local/lib/
 program_LIBRARIES := opencv_core opencv_highgui opencv_imgproc
 
-CPPFLAGS += $(foreach includedir,$(program_INCLUDE_DIRS),-I$(includedir))
+CPPFLAGS += -g -std=c++11 $(foreach includedir,$(program_INCLUDE_DIRS),-I$(includedir))
 LDFLAGS += $(foreach librarydir,$(program_LIBRARY_DIRS),-L$(librarydir))
 LDFLAGS += $(foreach library,$(program_LIBRARIES),-l$(library))
 
@@ -17,7 +17,7 @@ LDFLAGS += $(foreach library,$(program_LIBRARIES),-l$(library))
 all: $(program_NAME)
 
 $(program_NAME): $(program_OBJS)
-	$(CXX) $(CPPFLAGS) -g -std=c++11 $(program_OBJS) -o $(program_NAME) $(LDFLAGS)
+	$(CXX) $(CPPFLAGS) $(program_OBJS) -o $(program_NAME) $(LDFLAGS)
 
 clean:
 	@- $(RM) $(program_NAME)

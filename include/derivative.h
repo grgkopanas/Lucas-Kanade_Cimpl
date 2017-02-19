@@ -19,7 +19,6 @@ using namespace cv;
                          -10.0, 0.0, 10.0,\
                           -3.0, 0.0, 3.0}
             
-float absoluteSum(Mat *kernel);
 void prepareScharrKernel(Mat *kernel, int direction);
 void prepareCentralKernel(Mat *kernel, int direction);
 void derivativeFitler(const Mat *img, Mat *deriv, int type, int direction);

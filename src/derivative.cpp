@@ -1,17 +1,6 @@
 #include "include/derivative.h"
 #include "include/conv2d.h"
-
-float absoluteSum(Mat *kernel) {
-    float sum=0.0;
-
-    for (int i = 0; i < kernel->rows; i++) {
-        for (int j = 0; j < kernel->cols; j++) {
-                sum += abs(kernel->at<float>(i,j));
-        }
-    }
-
-    return sum;
-}
+#include "include/matrix.h"
 
 void prepareCentralKernel(Mat *kernel, int direction) {
     int dim_x;
@@ -58,7 +47,7 @@ void derivativeFitler(const Mat *img, Mat *deriv, int type, int direction) {
 
     for (int i = 1; i < img->rows-1; i++) {
         for (int j = 1; j < img->cols-1; j++) {
-            deriv->at<uchar>(i,j) = uchar(conv2d(i, j, img, &kernel)/norm_factor + 128 + 0.5); 
+            deriv->at<float>(i,j) = conv2d(i, j, img, &kernel)/norm_factor; 
         }
     }
 

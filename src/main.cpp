@@ -7,6 +7,7 @@
 #include "include/laplacian_pyr.h"
 #include "include/conv2d.h"
 #include "include/derivative.h"
+#include "include/matrix.h"
 
 using namespace std;
 using namespace cv;
@@ -37,18 +38,22 @@ int main(int argc, char* argv[])
     }
     */
 
-    Mat dx(img_g.rows, img_g.cols, CV_8UC1);
-    derivativeFitler(&img_g, &dx, SCHARR, DX);
+    Mat dx(img_g.rows, img_g.cols, CV_32F);
+    derivativeFitler(&img_g, &dx, CENTRAL, DX);
 
-    Mat dy(img_g.rows, img_g.cols, CV_8UC1);
-    derivativeFitler(&img_g, &dy, SCHARR, DY);
+    Mat dy(img_g.rows, img_g.cols, CV_32F);
+    derivativeFitler(&img_g, &dy, CENTRAL, DY);
+
+    float test1 = bilinearInterp(&img_g, 100, 100);
+    float test2 = bilinearInterp(&img_g, img_g.rows - 1, img_g.cols - 1);
+    float test3 = bilinearInterp(&img_g, 100.5, 100.5);
 
     namedWindow("Gaus0");
     imshow("Gaus0", lapl[0]);
     namedWindow("Gaus1");
-    imshow("Gaus1", dx);
+    imshow("Gaus1", (dx+128)/255.0);
     namedWindow("Gaus4");
-    imshow("Gaus4", dy);
+    imshow("Gaus4", (dy+128)/255.0);
     namedWindow("Gaus2");
     imshow("Gaus2", lapl[2]);
     namedWindow("Gaus3");
