@@ -2,13 +2,8 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "0.1.0",
-    "command": "g++",
+    "command": "make",
     "isShellCommand": true,
-    "args": ["src/main.cpp", "src/laplacian_pyr.cpp", "src/conv2d.cpp", 
-    "src/derivative.cpp",
-    "-g", "-std=c++11", "-o", "app.out",
-    "-I/usr/include/opencv", "-I${workspaceRoot}",
-    "-L/usr/local/lib/",
-    "-lopencv_core", "-lopencv_highgui", "-lopencv_imgproc"],
+    "args": [],
     "showOutput": "always"
 }

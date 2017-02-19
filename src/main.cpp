@@ -38,10 +38,10 @@ int main(int argc, char* argv[])
     */
 
     Mat dx(img_g.rows, img_g.cols, CV_8UC1);
-    derivativeFitler(&img_g, &dx, DX);
+    derivativeFitler(&img_g, &dx, SCHARR, DX);
 
     Mat dy(img_g.rows, img_g.cols, CV_8UC1);
-    derivativeFitler(&img_g, &dy, DY);
+    derivativeFitler(&img_g, &dy, SCHARR, DY);
 
     namedWindow("Gaus0");
     imshow("Gaus0", lapl[0]);

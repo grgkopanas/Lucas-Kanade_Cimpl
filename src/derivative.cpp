@@ -1,19 +1,64 @@
 #include "include/derivative.h"
 #include "include/conv2d.h"
 
-void derivativeFitler(const Mat *img, Mat *deriv, int direction) {
-    const float dx_filter[3] = DERIV_FILTER;
-    Mat kernel;
+float absoluteSum(Mat *kernel) {
+    float sum=0.0;
+
+    for (int i = 0; i < kernel->rows; i++) {
+        for (int j = 0; j < kernel->cols; j++) {
+                sum += abs(kernel->at<float>(i,j));
+        }
+    }
+
+    return sum;
+}
+
+void prepareCentralKernel(Mat *kernel, int direction) {
+    int dim_x;
+    int dim_y;
+
+    const float filter[3] = DERIV_FILTER;
     if (direction == DX) {
-       kernel = Mat(1, 3, CV_32F, const_cast<float *>(dx_filter));
+        dim_y = 1;
+        dim_x = 3;
+    }
+    else {
+        dim_y = 3;
+        dim_x = 1;
+    }
+    *kernel = Mat(dim_y, dim_x, CV_32F, const_cast<float *>(filter));
+}
+
+void prepareScharrKernel(Mat *kernel, int direction) {
+    int dim_x = 3;
+    int dim_y = 3;
+
+    if (direction == DX) {
+        const float filter[9] = SCHARR_FILTER_DX;
+        *kernel = Mat(dim_y, dim_x, CV_32F, const_cast<float *>(filter));
     }
     else if (direction == DY) {
-        kernel = Mat(3, 1, CV_32F, const_cast<float *>(dx_filter));
+        const float filter[9] = SCHARR_FILTER_DY;
+        *kernel = Mat(dim_y, dim_x, CV_32F, const_cast<float *>(filter));
     }
+}
+
+void derivativeFitler(const Mat *img, Mat *deriv, int type, int direction) {
+    Mat kernel;
+    
+    switch (type) {
+    case SCHARR:
+        prepareScharrKernel(&kernel, direction);
+        break;
+    case CENTRAL:
+        prepareCentralKernel(&kernel, direction);
+        break;
+    }
+    float norm_factor = absoluteSum(&kernel);
 
     for (int i = 1; i < img->rows-1; i++) {
         for (int j = 1; j < img->cols-1; j++) {
-            deriv->at<uchar>(i,j) = uchar(conv2d(i, j, img, &kernel)/2.0 + 128 + 0.5); 
+            deriv->at<uchar>(i,j) = uchar(conv2d(i, j, img, &kernel)/norm_factor + 128 + 0.5); 
         }
     }
 

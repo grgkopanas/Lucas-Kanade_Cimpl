@@ -5,13 +5,13 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/app.out",
+            "program": "${workspaceRoot}/lucas_kanade.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": true,
-            "preLaunchTask": "g++",
+            "preLaunchTask": "make",
             "linux": {
                 "MIMode": "gdb",
                 "setupCommands": [
