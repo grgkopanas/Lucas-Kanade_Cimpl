@@ -33,3 +33,16 @@ float absoluteSum(const Mat *kernel) {
 
     return sum;
 }
+
+void invert2by2Mat(Vec4f *m, Vec4f *m_inv ) {
+    float a = m->val[0];
+    float b = m->val[1];
+    float c = m->val[2];
+    float d = m->val[3];
+
+    float det = 1/(a*d - b*c); 
+    m_inv->val[0] =  det*d;
+    m_inv->val[1] = -det*b;
+    m_inv->val[2] = -det*c;
+    m_inv->val[3] =  det*a;
+}

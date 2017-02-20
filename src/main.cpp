@@ -49,6 +49,9 @@ int main(int argc, char* argv[])
     Mat dy(img_g.rows, img_g.cols, CV_32F);
     derivativeFitler(&img_g, &dy, CENTRAL, DY);
 
+    Mat SGM(img_g.rows - 2*OMEGA, img_g.cols - 2*OMEGA, CV_32FC4);
+    spatialGradientMatrix(&dx, &dy, &SGM);
+
     Mat Id(img_g.rows, img_g.cols, CV_32F);
     imageLocationDiffrence(&img_g, &img_g, &Id, 0.5, 0.5);
     Mat Id1(img_g.rows, img_g.cols, CV_32F);
